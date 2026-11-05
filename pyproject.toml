@@ -8,7 +8,9 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "langchain-google-genai>=4.4.3",
     "pymupdf>=2.0",
+    "python-dotenv>=1.2.4",
 ]
 
 [project.scripts]
@@ -17,3 +19,6 @@ freshman-modules-rag = "freshman_modules_rag:main"
 [build-system]
 requires = ["uv_build>=0.12.12,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv]
+package = false
