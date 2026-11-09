@@ -1,3 +1,4 @@
+from operator import mod
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
@@ -15,7 +16,6 @@ vectorstore = Chroma(
     persist_directory="./chroma_db"
 )
 
-retriever = vectorstore.as_retriever(search_kwargs = {"k": 3})
 
 def format_docs(docs):
     formatted = []
@@ -52,11 +52,19 @@ llm = ChatGoogleGenerativeAI(model = "gemini-3.6-flash")
 
 structured_llm = llm.with_structured_output(CitedAnswer)
 
-rag_chain = (
-    {"context" : retriever | format_docs, "question" : RunnablePassthrough()}
-    | prompt
-    | structured_llm
-)
+def get_rag_chain(module: str | None = None):
+    search_kwargs = {"k": 3}
+    if module:
+        search_kwargs["filter"] = {"module": module}
+
+    retriever = vectorstore.as_retriever(search_kwargs=search_kwargs)
+
+    rag_chain = (
+        {"context": retriever | format_docs, "question": RunnablePassthrough()}
+        | prompt
+        | structured_llm
+    )
+    return rag_chain
 
 
 if __name__ == "__main__":
@@ -64,7 +72,9 @@ if __name__ == "__main__":
     question = "When did Yekuno-Amlak send embassy to Egypt, and what was the purpose?"
     print(f"Question: {question}")
 
-    response = rag_chain.invoke(question)
+    chain = get_rag_chain(module = "History")
+
+    response = chain.invoke(question)
     print(response.answer)       
     print(response.module)       
     print(response.page_numbers)  
