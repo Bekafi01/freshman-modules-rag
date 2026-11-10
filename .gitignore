@@ -18,10 +18,6 @@ data/processed/*
 data/chunks/*
 !data/chunks/.gitkeep
 
-# Vector stores & local databases
-chroma/
-chroma_db/
-*.sqlite3
 
 # Environment variables & secrets
 .env
