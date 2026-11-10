@@ -61,7 +61,7 @@ def index_documents(vectorstore, chunks, batch_size = 100):
     return vectorstore._collection.count()
 
 if __name__=="__main__":
-    path = Path("data/raw/History.pdf")
+    path = Path("data/raw/logic.pdf")
     doc = load_single_pdf(path)
     docs = split_textbooks(doc)
     total_indexed = index_documents(vectorstore, docs)
