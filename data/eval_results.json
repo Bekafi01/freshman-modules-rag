@@ -1,0 +1,345 @@
+{
+  "metrics": {
+    "recall_at_3": 100.0,
+    "citation_accuracy": 100.0,
+    "faithfulness": 95.83333333333334,
+    "correctness": 75.0,
+    "guardrail_accuracy": 100.0
+  },
+  "cases": [
+    {
+      "id": "hist-01",
+      "question": "When did Yekuno-Amlak send an embassy to Egypt, and what was the purpose?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Yekuno-Amlak sent an embassy to Egypt's Sultan Baybars in 1272 requesting an Abun from the Alexandrian Coptic Orthodox Church.",
+      "model_pages": [
+        79
+      ]
+    },
+    {
+      "id": "hist-02",
+      "question": "When was the Solomonic dynasty restored, and who took power from the Zagwe dynasty?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "The 'Solomonic' dynasty was restored around 1270 when Yekuno-Amlak (also known as Tesfa-Iyesus) took power after defeating the last Zagwe ruler.",
+      "model_pages": [
+        67,
+        54
+      ]
+    },
+    {
+      "id": "hist-03",
+      "question": "Why was the royal prison of Amba-Gishen established, and during whose reign did this occur?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "The royal prison of Amba-Gishen was established to avoid further power struggles among contending princes. This occurred around 1300 during the reign of Widim Ra'ad.",
+      "model_pages": [
+        68
+      ]
+    },
+    {
+      "id": "hist-04",
+      "question": "What are the two adoption mechanisms used by the Oromo to integrate non-Oromo people in the 16th century?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "The two adoption mechanisms used by the Oromo to integrate non-Oromo people are Guddifachaa (fostering a child where the child deserves all rights and privileges of a real child) and Moggaasaa (the system of bringing a non-Oromo clan into the gosa or clan through an oath of allegiance).",
+      "model_pages": [
+        103
+      ]
+    },
+    {
+      "id": "hist-05",
+      "question": "What policy did Emperor Fasiledes introduce toward Europeans after expelling the Jesuits, and what agreement did he make in 1647 to enforce it?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Emperor Fasiledes introduced a closed-door policy that isolated Ethiopia from all Europeans for about a century and a half. To enforce this and ensure no European crossed into the Christian highlands, he initiated a policy of close diplomatic relations and alliances with hostile neighboring Muslim states, concluding an agreement with the Ottoman Pashas at Suakin and Massawa in 1647 to block any European from entering the country.",
+      "model_pages": [
+        91
+      ]
+    },
+    {
+      "id": "hist-06",
+      "question": "Which two articles of the Wuchale Treaty of 1889 caused major conflict between Ethiopia and Italy, and what was the discrepancy in Article XVII?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Articles III and XVII of the Wuchale Treaty caused major conflict. The discrepancy in Article XVII was that the Amharic version stated Ethiopia could use Italy to conduct its foreign affairs as an option, whereas the Italian version indicated that Emperor Menelik's foreign contacts must be conducted through the agency of Italy.",
+      "model_pages": [
+        147,
+        148
+      ]
+    },
+    {
+      "id": "phys-01",
+      "question": "What is Archimedes' principle?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Archimedes' principle states that anybody completely or partially submerged in a fluid is buoyed up by a force equal to the weight of the fluid displaced by the body.",
+      "model_pages": [
+        80,
+        85
+      ]
+    },
+    {
+      "id": "phys-02",
+      "question": "What is Pascal's principle regarding pressure applied to an enclosed fluid?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Pascal's principle states that when pressure is applied to an enclosed fluid (or a confined fluid in a container), the pressure is transmitted undiminished/equally to every point in the fluid and to every point on the walls of the container.",
+      "model_pages": [
+        78,
+        85
+      ]
+    },
+    {
+      "id": "phys-03",
+      "question": "State Kepler's three laws of planetary motion.",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Kepler's First Law (Law of Orbits) states that the orbit of each planet in the solar system is an ellipse, with the Sun on one focus. Kepler's Second Law (The Law of Areas) states that the radius vector connecting the centers of the Sun and the planet sweeps out equal areas in equal intervals of time. Kepler's Third Law (The Law of Harmony) states that the square of the orbital period of a planet is proportional to the cube of the average distance between the centers of the planet and the sun.",
+      "model_pages": [
+        48,
+        49
+      ]
+    },
+    {
+      "id": "phys-04",
+      "question": "What does the Zeroth Law of Thermodynamics state?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Experimentally, if object A is in thermal equilibrium with object B, and object B is in thermal equilibrium with object C, then object A is in thermal equilibrium with object C.",
+      "model_pages": [
+        89
+      ]
+    },
+    {
+      "id": "phys-05",
+      "question": "What are Kirchhoff's two circuit rules and what conservation laws are they based on?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Kirchhoff's first rule (junction rule) states that the total current or charge entering a junction or node is exactly equal to the charge leaving the node, which is based on the Conservation of Charge. Kirchhoff's second rule (loop rule) states that in any closed loop network, the total voltage around the loop is equal to the sum of all the voltage drops within the same loop (or the algebraic sum of all voltages within the loop must be equal to zero), which is known as the Conservation of Energy.",
+      "model_pages": [
+        143,
+        144,
+        146
+      ]
+    },
+    {
+      "id": "phys-06",
+      "question": "How are insulators, semiconductors, and conductors distinguished in terms of the forbidden energy gap between the valence band and conduction band?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Materials are classified as conductors, semiconductors, and insulators based on the forbidden energy gap between the valence band and the conduction band. Specifically, insulators have a large forbidden energy gap greater than 3eV, semiconductors have a small forbidden energy gap of less than 3eV, and conductors have a gap as described by their band diagrams.",
+      "model_pages": [
+        156,
+        157,
+        158
+      ]
+    },
+    {
+      "id": "logic-01",
+      "question": "What is the difference between a premise and a conclusion in an argument?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "A premise is a statement that sets forth the reason or evidence given for accepting the conclusion, whereas a conclusion is the claim that an argument is trying to establish or that is claimed to follow from the given evidence.",
+      "model_pages": [
+        43
+      ]
+    },
+    {
+      "id": "logic-02",
+      "question": "What is a deductive argument versus an inductive argument?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "A deductive argument is an argument in which the premises are claimed to support the conclusion in such a way that if they are assumed true, it is impossible for the conclusions to be false, or where the conclusion follows with strict certainty or necessity. An inductive argument is an argument in which the premises are claimed to support the conclusion in such a way that if they are assumed true, it is improbable for the conclusions to be false, or where the conclusion is claimed to follow only probably.",
+      "model_pages": [
+        37,
+        64,
+        84
+      ]
+    },
+    {
+      "id": "logic-03",
+      "question": "What are the \u091a\u093e\u0930 (four) subsets or aspects of metaphysical questions discussed in Chapter One?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": false,
+      "model_answer": "Metaphysical questions may be divided into four subsets or aspects, which include the Cosmological Aspect, the Theological Aspect, and the Anthropological Aspect.",
+      "model_pages": [
+        21
+      ]
+    },
+    {
+      "id": "logic-04",
+      "question": "What is the difference between a sound argument and a cogent argument?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": false,
+      "model_answer": "In a sound argument, it is only necessary that the premises be true and nothing more, which guarantees a true conclusion given good reasoning. In a cogent argument, the premises must not only be true, but they must also not ignore some important piece of evidence that outweighs the given evidence and entails a quite different conclusion.",
+      "model_pages": [
+        83
+      ]
+    },
+    {
+      "id": "logic-05",
+      "question": "What is the difference between the intensional meaning (connotation) and extensional meaning (denotation) of a term, and which one determines the other?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "The intensional meaning (connotation) of a term consists of the attributes it connotes (such as being furry and having four legs for the term 'cat'), while the extensional meaning (denotation) consists of the actual members of the class that the term denotes (such as all the cats in the universe). Intension determines extension, as the intensional meaning serves as the criterion for deciding what the extension consists of.",
+      "model_pages": [
+        101,
+        102
+      ]
+    },
+    {
+      "id": "logic-06",
+      "question": "How do the Straw Man, Red Herring, and Missing the Point (Ignoratio Elenchi) fallacies differ from one another?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "Straw man draws a conclusion by distorting an opponent's argument (involving at least two arguers implicitly) and generating a new set of premises. Red herring ignores the opponent's argument, subtly changes the subject to generate new premises, and often does not involve two arguers. Both red herring and straw man proceed by generating a new set of premises, whereas missing the point draws a conclusion from the original premises. Additionally, in red herring and straw man, the conclusion is relevant to the new premises from which it is drawn, but in missing the point, the conclusion is irrelevant to the original premises.",
+      "model_pages": [
+        187,
+        188
+      ]
+    },
+    {
+      "id": "tech-01",
+      "question": "Who coined the term 'Fourth Industrial Revolution' (IR 4.0), when was it coined, and what are its core cyber-physical systems and drivers?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "The term 'Fourth Industrial Revolution' (IR 4.0) was coined by Klaus Schwab, the founder and executive chairman of the World Economic Forum, in the year 2016. Its advancements and technologies include robotics, the Internet of Things (IoT), additive manufacturing, and autonomous vehicles, which are collectively known as cyber-physical systems.",
+      "model_pages": [
+        14
+      ]
+    },
+    {
+      "id": "tech-02",
+      "question": "What are the five key high-level activities in the Big Data Value Chain, and what are the four stages of the Big Data Life Cycle with Hadoop?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": false,
+      "model_answer": "The provided text mentions that the Big Data Value Chain identifies high-level activities to generate value, but does not list all five. For the Big Data Life Cycle with Hadoop, the four stages are: 1. Ingesting data into the system, 2. Processing the data in storage, 3. Computing and analyzing data, and 4. Visualizing the results.",
+      "model_pages": [
+        27,
+        33
+      ]
+    },
+    {
+      "id": "tech-03",
+      "question": "How is Artificial Intelligence classified based on capabilities (Type-1) versus functionality (Type-2)?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": false,
+      "model_answer": "Artificial Intelligence is classified into two main categories: based on capabilities (which include Weak AI or Narrow AI, General AI, and Super AI) and based on functionality (which includes Reactive Machines, among other types).",
+      "model_pages": [
+        48,
+        49
+      ]
+    },
+    {
+      "id": "tech-04",
+      "question": "What are the four major layers in the architecture of IoT devices, and what are the three categories of sensors in the sensing layer?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": false,
+      "is_correct": false,
+      "model_answer": "The four major components in the architecture of IoT devices are the sensing, network, data processing, and application layers. The sensors in IoT devices can be classified into three broad categories: motion sensors, linear motion, and angular motion (with motion sensors further measuring linear and angular motion changes and orientation).",
+      "model_pages": [
+        71
+      ]
+    },
+    {
+      "id": "tech-05",
+      "question": "What are the three main blocks in the standard architecture of Augmented Reality Systems (ARS), and what are the two visualization technologies used in the Visual Unit?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": true,
+      "model_answer": "The three main blocks in the AR system architecture are the Infrastructure Tracker Unit, the Processing Unit, and the Visual Unit. The two visualization technologies used in the Visual Unit are Video see-through and Optical see-through.",
+      "model_pages": [
+        89,
+        90
+      ]
+    },
+    {
+      "id": "tech-06",
+      "question": "What are the three pillars of Blockchain technology, and what are the eight defining characteristics of Autonomic Computing systems?",
+      "recall_hit": true,
+      "citation_hit": true,
+      "is_faithful": true,
+      "is_correct": false,
+      "model_answer": "I cannot find information about the three pillars of Blockchain technology in the provided textbook. However, the eight defining characteristics of autonomic systems/applications are: Self-Awareness, Self-Configuring, Self-Optimizing, Self-Healing, Self-Protecting, Context-Aware, Open, and Anticipatory.",
+      "model_pages": [
+        128
+      ]
+    },
+    {
+      "id": "neg-01",
+      "question": "Who won the FIFA World Cup in 2022?",
+      "guardrail_refused": true,
+      "model_answer": "I cannot find this information in the provided textbook."
+    },
+    {
+      "id": "neg-02",
+      "question": "How Does the Transformer architecture compute scaled dot-product self-attention in Large Language Models?",
+      "guardrail_refused": true,
+      "model_answer": "I cannot find this information in the provided textbook."
+    },
+    {
+      "id": "neg-03",
+      "question": "What is the time-dependent Schr\u00f6dinger wave equation in quantum mechanics, and how is it used to solve for the hydrogen atom wavefunctions?",
+      "guardrail_refused": true,
+      "model_answer": "I cannot find this information in the provided textbook."
+    },
+    {
+      "id": "neg-04",
+      "question": "What were the main provisions of the Pretoria Peace Agreement signed in November 2022 in Ethiopia?",
+      "guardrail_refused": true,
+      "model_answer": "I cannot find this information in the provided textbook."
+    },
+    {
+      "id": "neg-05",
+      "question": "How do you prove G\u00f6del's First Incompleteness Theorem using G\u00f6del numbering in mathematical logic?",
+      "guardrail_refused": true,
+      "model_answer": "I cannot find this information in the provided textbook."
+    }
+  ]
+}
