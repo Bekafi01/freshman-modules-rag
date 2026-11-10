@@ -69,10 +69,10 @@ def get_rag_chain(module: str | None = None):
 
 if __name__ == "__main__":
 
-    question = "When did Yekuno-Amlak send embassy to Egypt, and what was the purpose?"
+    question = "What is Archimedes' principle and what does buoyant force depend on?"
     print(f"Question: {question}")
 
-    chain = get_rag_chain(module = "History")
+    chain = get_rag_chain()
 
     response = chain.invoke(question)
     print(response.answer)       
