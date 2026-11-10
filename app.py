@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 from langchain_core.messages import HumanMessage, AIMessage
-from src.rag import rephrase_chain, answer_chain, format_docs, vectorstore
+from src.rag import rephrase_chain, answer_chain, format_docs, vectorstore, expand_with_neighbors
 
 def scroll_to_bottom():
     """Smoothly scrolls the page to the bottom of the chat container."""
@@ -157,8 +157,9 @@ if active_prompt:
                 else:
                     search_query = active_prompt
 
-                # B. Retrieve relevant chunks
-                docs = retriever.invoke(search_query)
+                # B. Retrieve relevant chunks & expand boundaries
+                raw_docs = retriever.invoke(search_query)
+                docs = expand_with_neighbors(raw_docs, vectorstore, forward_steps=2)
                 context = format_docs(docs)
 
                 # Format structured source passages for clean UI display

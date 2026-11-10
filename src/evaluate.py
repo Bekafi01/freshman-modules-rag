@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
-from src.rag import retriever, answer_chain, format_docs
+from src.rag import retriever, answer_chain, format_docs, vectorstore, expand_with_neighbors
 
 load_dotenv()
 
@@ -46,12 +46,16 @@ Generated Answer: {answer}
 correctness_chain = correctness_prompt | judge_llm.with_structured_output(CorrectnessJudge)
 
 # 3. Main Evaluation Function
-def run_evaluation(dataset_path: Path, max_samples: int | None = None):
+def run_evaluation(dataset_path: Path, k: int = 5, max_samples: int | None = None, target_ids: list[str]  | None = None):
     with open(dataset_path, "r", encoding="utf-8") as f:
         cases = json.load(f)
 
-    if max_samples:
+    if target_ids:
+        cases = [c for c in cases if c["id"] in target_ids]
+    elif max_samples:
         cases = cases[:max_samples]
+
+    retriever = vectorstore.as_retriever(search_kwargs = {"k": k})
     
     print(f"\n Starting RAG Evaluation Bechmark across {len(cases)} test cases...\n")
 
@@ -74,17 +78,26 @@ def run_evaluation(dataset_path: Path, max_samples: int | None = None):
 
         print(f"[{i:02d}/{len(cases):02d}] Evaluating {q_id}: '{question}'")
 
-        # Retrieve
-        docs = retriever.invoke(question)
+        # Retrieve & expand contiguous boundaries
+        raw_docs = retriever.invoke(question)
+        docs = expand_with_neighbors(raw_docs, vectorstore, forward_steps=2)
         context = format_docs(docs)
         retrieved_pages = [d.metadata.get("page_number") for d in docs]
 
-        # Generate Answer
-        response = answer_chain.invoke({
-            "context": context,
-            "chat_history": [],
-            "question": question
-        })
+        for attempt in range(3):
+            try:
+                # Generate Answer
+                response = answer_chain.invoke({
+                    "context": context,
+                    "chat_history": [],
+                    "question": question
+                })
+                break
+                
+            except Exception as e:
+                if attempt == 2:
+                    raise
+                time.sleep(2)
 
         # Evaluate based on category
         if is_answerable:
@@ -100,17 +113,28 @@ def run_evaluation(dataset_path: Path, max_samples: int | None = None):
             if citation_hit:
                 citation_hits += 1
 
-            # 3. Faithfulness (LLM Judge)
-            faith_eval = faithfulness_chain.invoke({"context": context, "answer": response.answer})
-            if faith_eval.is_faithful:
-                faithful_hits += 1
+                        # 3. Faithfulness (LLM Judge)
+            for attempt in range(3):
+                try:
+                    faith_eval = faithfulness_chain.invoke({"context": context, "answer": response.answer})
+                    break
+                except Exception:
+                    time.sleep(2)
 
             # 4. Correctness (LLM Judge)
-            corr_eval = correctness_chain.invoke({
-                "question": question,
-                "ground_truth": case["ground_truth"],
-                "answer": response.answer
-            })
+            for attempt in range(3):
+                try:
+                    corr_eval = correctness_chain.invoke({
+                        "question": question,
+                        "ground_truth": case["ground_truth"],
+                        "answer": response.answer
+                    })
+                    break
+                except Exception:
+                    time.sleep(2)
+
+            if faith_eval.is_faithful:
+                faithful_hits += 1
 
             if corr_eval.is_correct:
                 correct_hits += 1
@@ -185,4 +209,5 @@ def run_evaluation(dataset_path: Path, max_samples: int | None = None):
 
 if __name__ == "__main__":
     dataset_file = Path("data/eval_dataset.json")
-    run_evaluation(dataset_file)
+    # Run full 29-case benchmark with k=5 and neighbor expansion
+    run_evaluation(dataset_file, k=5)

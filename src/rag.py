@@ -1,3 +1,4 @@
+import re
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
@@ -5,6 +6,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.documents import Document
 from pydantic import BaseModel, Field
 
 load_dotenv()
@@ -25,7 +27,49 @@ def format_docs(docs):
         module = doc.metadata.get("module", "Module")
         formatted.append(f"[{module} | Page {page}]\n {doc.page_content}")
    
-    return "\n\n --- \n\n".join(formatted)     
+    return "\n\n --- \n\n".join(formatted)    
+
+# Build an in-memory index of (module, chunk_index) -> id for instant neighbor lookup
+def get_chunk_map(vectorstore):
+    all_ids = vectorstore.get(include=[])["ids"]
+    chunk_map = {}
+    for doc_id in all_ids:
+        m = re.match(r"([a-z_]+)_p\d+_\d+_c(\d+)", doc_id)
+        if m:
+            chunk_map[(m.group(1), int(m.group(2)))] = doc_id
+    return chunk_map
+
+CHUNK_MAP = get_chunk_map(vectorstore)
+
+def expand_with_neighbors(docs, vectorstore, forward_steps=2):
+    """Expands retrieved chunks with successor chunks to prevent boundary cutoffs."""
+    if not docs:
+        return docs
+
+    expanded_ids = []
+    seen = set()
+
+    for doc in docs:
+        if doc.id and doc.id not in seen:
+            expanded_ids.append(doc.id)
+            seen.add(doc.id)
+
+        # Look up next chunks (e.g. idx + 1, idx + 2)
+        if doc.id:
+            m = re.match(r"([a-z_]+)_p\d+_\d+_c(\d+)", doc.id)
+            if m:
+                module, idx = m.group(1), int(m.group(2))
+                for step in range(1, forward_steps + 1):
+                    next_id = CHUNK_MAP.get((module, idx + step))
+                    if next_id and next_id not in seen:
+                        expanded_ids.append(next_id)
+                        seen.add(next_id)
+
+    fetched = vectorstore.get(ids=expanded_ids, include=["documents", "metadatas"])
+    return [
+        Document(page_content=text, metadata=meta, id=doc_id)
+        for doc_id, text, meta in zip(fetched["ids"], fetched["documents"], fetched["metadatas"])
+    ]
 
 class CitedAnswer(BaseModel):
     """Answer to the student's question with exact textbook citations."""
@@ -122,8 +166,9 @@ if __name__ == "__main__":
             else:
                 search_query = user_input
 
-            # 2. Retrieve relevant chunks
-            docs = retriever.invoke(search_query)
+            # 2. Retrieve relevant chunks & expand boundaries
+            raw_docs = retriever.invoke(search_query)
+            docs = expand_with_neighbors(raw_docs, vectorstore)
             context = format_docs(docs)
 
             # 3. Generate grounded answer
