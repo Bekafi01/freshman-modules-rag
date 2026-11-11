@@ -6,6 +6,9 @@
 [![Chroma DB](https://img.shields.io/badge/Vector%20Store-ChromaDB-red.svg)](https://www.trychroma.com/)
 [![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B.svg)](https://streamlit.io/)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://freshman-modules-rag.streamlit.app)
+
+🔗 **Live Public Demo**: [freshman-modules-rag.streamlit.app](https://freshman-modules-rag.streamlit.app)
 
 A production-grade, conversational Retrieval-Augmented Generation (RAG) system engineered for Ethiopian university freshman students. It provides accurate, grounded answers with **exact page-level and module-level citations** across four standard national freshman textbooks.
 
@@ -26,25 +29,25 @@ The system indexes **2,403 high-density text chunks** across the official Minist
 ```mermaid
 flowchart TD
     subgraph Ingestion ["1. Document Ingestion & Indexing"]
-        PDF[("4 Official Textbooks<br/>(PDFs)")] --> Loader["PyMuPDF Loader<br/>(Header/Footer Strip + Page Track)"]
-        Loader --> Splitter["Recursive Character Text Splitter<br/>(1000 chars, 150 overlap)"]
-        Splitter --> DeterministicID["Deterministic Chunk ID Engine<br/>{module}_p{page}_{start}_c{i}"]
-        DeterministicID --> Embedder["Gemini Embedding 001<br/>(Batched & Rate-Limited)"]
-        Embedder --> VectorDB[("ChromaDB Vector Store<br/>(2,403 Chunks)")]
+        PDF[("4 Official Textbooks - PDFs")] --> Loader["PyMuPDF Loader<br/>Header/Footer Strip + Page Track"]
+        Loader --> Splitter["Recursive Character Text Splitter<br/>1000 chars, 150 overlap"]
+        Splitter --> DeterministicID["Deterministic Chunk ID Engine<br/>module_pPage_start_cIndex"]
+        DeterministicID --> Embedder["Gemini Embedding 001<br/>Batched & Rate-Limited"]
+        Embedder --> VectorDB[("ChromaDB Vector Store - 2,403 Chunks")]
     end
 
     subgraph QueryPipeline ["2. Conversational Retrieval & Reasoning"]
-        UserQuery["Student Question / Follow-up"] --> Rephrase["Contextual Rephrase Chain<br/>(Condenses History into Standalone Query)"]
-        Rephrase --> VectorSearch["Top-K Vector Search<br/>(ChromaDB)"]
-        VectorSearch --> NeighborExpansion["Deterministic Neighbor Expansion<br/>(Lookahead Window: +2 Chunks, <1ms)"]
+        UserQuery["Student Question or Follow-up"] --> Rephrase["Contextual Rephrase Chain<br/>Condenses History into Standalone Query"]
+        Rephrase --> VectorSearch["Top-K Vector Search<br/>ChromaDB"]
+        VectorSearch --> NeighborExpansion["Deterministic Neighbor Expansion<br/>Lookahead Window: +2 Chunks, sub-millisecond"]
         NeighborExpansion --> ContextFormat["Module & Page Grounded Context"]
-        ContextFormat --> AnswerChain["Gemini 3.5 Flash Lite<br/>(Strict Academic Grounding Prompt)"]
-        AnswerChain --> StructuredOutput["Pydantic CitedAnswer<br/>(Answer, Module, Pages, Confidence)"]
+        ContextFormat --> AnswerChain["Gemini 3.5 Flash Lite<br/>Strict Academic Grounding Prompt"]
+        AnswerChain --> StructuredOutput["Pydantic CitedAnswer<br/>Answer, Module, Pages, Confidence"]
     end
 
     subgraph Interface ["3. Presentation & Evaluation"]
-        StructuredOutput --> StreamlitApp["Streamlit Interactive Web UI<br/>(Dynamic Filtering, Badges, Auto-scroll)"]
-        StructuredOutput --> EvalSuite["RAG Triad LLM-as-a-Judge<br/>(Faithfulness & Correctness)"]
+        StructuredOutput --> StreamlitApp["Streamlit Interactive Web UI<br/>Dynamic Filtering, Badges, Auto-scroll"]
+        StructuredOutput --> EvalSuite["RAG Triad LLM-as-a-Judge<br/>Faithfulness & Correctness"]
     end
 ```
 
@@ -158,6 +161,7 @@ uv run python -m src.evaluate
 ---
 
 ## 🎯 Roadmap & Future Enhancements
-- [ ] **Sub-Query Decomposition**: Automated multi-query execution for compound questions spanning disparate chapters (e.g. Blockchain vs. Autonomic Computing).
+- [ ] **Complete Ethiopian Freshman Curriculum Coverage**: Ingest and index the remaining national freshman modules (Communicative English Skills, General Psychology, Social Anthropology, Moral & Civics, Mathematics for Natural/Social Sciences, and Inclusiveness).
+- [ ] **Sub-Query Decomposition**: Automated multi-query execution for compound questions spanning disparate chapters.
 - [ ] **Hybrid Search**: Integrating BM25 keyword matching alongside dense vector embeddings.
 - [ ] **Containerization**: Single-command deployment via Docker & Docker Compose.
